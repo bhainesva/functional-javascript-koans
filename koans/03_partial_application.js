@@ -3,6 +3,13 @@ describe("Partial application", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // sum :: Number → Number → Number
+    const sum = (...args) => {
+      if (args.length == 2) {
+        return args[0] + args[1];
+      }
+
+      return ((b) => args[0] + b);
+    }
 
     /***************************************************************/
 
@@ -23,6 +30,13 @@ describe("Partial application", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // map :: (a → b) → [a] → [b]
+    const map = (...args) => {
+      if (args.length == 2) {
+        return args[1].map(args[0]);
+      }
+
+      return (arr) => arr.map(args[0]);
+    }
 
     /***************************************************************/
 

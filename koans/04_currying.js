@@ -5,6 +5,17 @@ describe("Currying", () => {
     // HINT: Function.prototype.length specifies function arity
 
     // curry :: (* → a) → (* → a)
+    const curry = (fn) => {
+      const arity = fn.length;
+      if (arity === 1) return fn;
+
+      return (...args) => {
+        if (args.length == arity) {
+          return fn(...args);
+        }
+        return curry(fn.bind(this, ...args));
+      };
+    };
 
     /***************************************************************/
 

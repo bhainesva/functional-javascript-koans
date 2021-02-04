@@ -3,6 +3,7 @@ describe("Pure functions", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // append :: ([a], a) -> [a]
+    const append = (arr, el) => {arr.push(el); return arr};
 
     /***************************************************************/
 
@@ -27,6 +28,7 @@ describe("Pure functions", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // append :: ([a], a) -> [a]
+    const append = (arr, el) => [...arr, el];
 
     /***************************************************************/
 

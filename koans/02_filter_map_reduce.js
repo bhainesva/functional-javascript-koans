@@ -1,9 +1,29 @@
+function curry(fn) {
+  const arity = fn.length;
+
+  return function $curry(...args) {
+    if (args.length < arity) {
+      return $curry.bind(null, ...args);
+    }
+
+    return fn.call(null, ...args);
+  };
+}
+
+const eq = curry((a, b) => a === b);
+
+const compose = (...fns) => (...args) => fns.reduceRight((res, fn) => [fn.call(null, ...res)], args)[0];
+
+
+
 describe("Filter", () => {
   describe("Implement a predicate function to select even numbers", () => {
 
     /********************* YOUR IMPLEMENTATION *********************/
 
     // predicate :: Number → Boolean
+    const mod = curry((a, b) => b%a)
+    const predicate = compose(eq(0), mod(2))
 
     /***************************************************************/
 
@@ -20,6 +40,7 @@ describe("Filter", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // predicate :: String → Boolean
+    const predicate = x => x.toLowerCase() !== x.toLowerCase().split('').reverse().join('');
 
     /***************************************************************/
 
@@ -33,6 +54,16 @@ describe("Filter", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // filter :: ((a → Boolean), [a]) → [a]
+    const filter = (f, arr) => {
+      const res = [];
+      for (const el of arr) {
+        if (f(el)) {
+          res.push(el);
+        }
+      }
+
+      return res;
+    }
 
     /***************************************************************/
 
@@ -50,6 +81,17 @@ describe("Map", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // fibonacci :: Number → Number
+    const fibonacci = (x) => {
+      let prev = 1;
+      let cur = 0;
+      for (let i = 0; i < x; i++) {
+        const tmp = cur;
+        cur = cur + prev;
+        prev = tmp;
+      }
+
+      return cur;
+    }
 
     /***************************************************************/
 
@@ -63,6 +105,14 @@ describe("Map", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // map :: ((a → b), [a]) → [b]
+    const map = (f, arr) => {
+      const res = [];
+      for (const el of arr) {
+        res.push(f(el));
+      }
+
+      return res;
+    }
 
     /***************************************************************/
 
@@ -78,6 +128,7 @@ describe("Map", () => {
     // HINT: You can do it in one line using Array.from (or spread operator), array constructor and built-in map function
 
     // range :: (Number, Number) → [Number]
+    const range = (a, b) => [...Array(b-(a-1))].map((el, i) => a + i)
 
     /***************************************************************/
 
@@ -97,6 +148,7 @@ describe("Reduce", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // fromPairs :: ({ [a]: b }) → [{a, b}]
+    const fromPairs = (pairs) => pairs.reduce((acc, cur) => {acc[cur[0]] = cur[1]; return acc}, {});
 
     /***************************************************************/
 
@@ -109,6 +161,10 @@ describe("Reduce", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // map :: ((a → b), [a]) → [b]
+    const map = (f, arr) => arr.reduce((acc, cur) => {
+      acc.push(f(cur));
+      return acc;
+    }, []);
 
     /***************************************************************/
 
@@ -122,6 +178,12 @@ describe("Reduce", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // filter :: ((a → Boolean), [a]) → [a]
+    const filter = (p, arr) => arr.reduce((acc, cur) => {
+      if (p(cur)) {
+        acc.push(cur);
+      }
+      return acc;
+    }, []);
 
     /***************************************************************/
 

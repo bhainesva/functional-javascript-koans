@@ -4,6 +4,13 @@ describe("Closures", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // counter :: () → () → Number
+    const counter = () => {
+      let count = 0;
+      return (() => {
+        count += 1;
+        return count;
+      });
+    }
 
     /***************************************************************/
 
@@ -26,6 +33,14 @@ describe("Closures", () => {
     /********************* YOUR IMPLEMENTATION *********************/
 
     // unique :: () → a → Boolean
+    const unique = () => {
+      const seen = [];
+      return (a) => {
+        const ret = !seen.includes(a);
+        seen.push(a);
+        return ret;
+      }
+    }
 
     /***************************************************************/
 
